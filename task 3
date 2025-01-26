@@ -1,0 +1,50 @@
+import random
+import string
+
+# Function to generate password
+def generate_password(length, use_uppercase=True, use_digits=True, use_special_chars=True):
+    # Define the character sets to choose from
+    lowercase = string.ascii_lowercase
+    uppercase = string.ascii_uppercase if use_uppercase else ""
+    digits = string.digits if use_digits else ""
+    special_chars = string.punctuation if use_special_chars else ""
+
+    # Combine all selected character sets
+    all_characters = lowercase + uppercase + digits + special_chars
+
+    # Ensure the password has a good level of complexity by including at least one character from each set
+    if not all_characters:
+        return "Error: No characters selected for password generation."
+
+    # Generate the password by randomly selecting characters from the combined set
+    password = ''.join(random.choice(all_characters) for _ in range(length))
+
+    return password
+
+def main():
+    print("Welcome to the Password Generator!")
+
+    # Get user input for the desired password length
+    try:
+        length = int(input("Enter the desired password length: "))
+    except ValueError:
+        print("Invalid input! Please enter a numerical value.")
+        return
+
+    if length < 4:
+        print("Password length should be at least 4 characters.")
+        return
+
+    # Get user input for password complexity options
+    use_uppercase = input("Include uppercase letters? (y/n): ").lower() == 'y'
+    use_digits = input("Include digits? (y/n): ").lower() == 'y'
+    use_special_chars = input("Include special characters? (y/n): ").lower() == 'y'
+
+    # Generate the password
+    password = generate_password(length, use_uppercase, use_digits, use_special_chars)
+
+    # Display the generated password
+    print("\nGenerated Password:", password)
+
+if __name__ == "__main__":
+    main()
